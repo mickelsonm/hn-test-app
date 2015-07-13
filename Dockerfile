@@ -1,11 +1,11 @@
-FROM golang:latest
+FROM google/golang
 
-RUN mkdir -p /home/deployer/gosrc/src/github.com/mickelsonm/hn-test-app
-ADD . /home/deployer/gosrc/src/github.com/mickelsonm/hn-test-app
-WORKDIR /home/deployer/gosrc/src/github.com/mickelsonm/hn-test-app
-RUN export GOPATH=/home/deployer/gosrc && go get
-RUN export GOPATH=/home/deployer/gosrc && go build
+WORKDIR /gopath/src/github.com/mickelsonm/hn-test-app
+ADD . /gopath/src/github.com/mickelsonm/hn-test-app
 
-ENTRYPOINT /home/deployer/gosrc/src/github.com/mickelsonm/hn-test-app/hn-test-app
+RUN go get
+RUN go install
+
+ENTRYPOINT ["/gopath/bin/hn-test-app"]
 
 EXPOSE 3000
